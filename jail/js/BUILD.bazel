@@ -5,6 +5,7 @@ go_library(
     srcs = ["main.go"],
     importpath = "github.com/prufen/prufen/jail/js",
     visibility = ["//visibility:private"],
+    deps = ["@com_rogchap_v8go//:go_default_library"],
 )
 
 go_binary(

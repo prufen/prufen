@@ -20,6 +20,19 @@ http_archive(
     ],
 )
 
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "new_git_repository")
+
+new_git_repository(
+    name = "com_rogchap_v8go",
+    # This is external/v8go.BUILD file.
+    build_file = "v8go.BUILD",
+    # v0.7.0
+    commit = "6e4af34cf4447be859741c0719aee06a3d3e7b2a",
+    remote = "https://github.com/rogchap/v8go",
+    # Suggested by Bazel.
+    shallow_since = "1639006196 +1100",
+)
+
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 load("//:gazelle_repos.bzl", "gazelle_repositories")
