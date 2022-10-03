@@ -33,6 +33,14 @@ new_git_repository(
     shallow_since = "1639006196 +1100",
 )
 
+# An example of using local (and patched) version of the repository:
+# new_local_repository(
+#     name = "com_rogchap_v8go",
+#     build_file = "external/v8go.BUILD",
+#     # Path to the local fork of github.com/rogchap/v8go
+#     path = "../v8go",
+# )
+
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 load("//:gazelle_repos.bzl", "gazelle_repositories")
