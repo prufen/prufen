@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 go_library(
     name = "js_lib",
     srcs = ["main.go"],
-    importpath = "github.com/example/project/jail/js",
+    importpath = "github.com/prufen/prufen/jail/js",
     visibility = ["//visibility:private"],
 )
 
