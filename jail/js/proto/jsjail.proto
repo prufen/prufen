@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package jsjail;
+
+message ExecuteRequest {
+    string script = 1;
+}
+
+message ExecuteResponse {
+    string result = 1;
+    string error = 2;
+}
+
+service JSJail {
+    rpc Execute(ExecuteRequest) returns (ExecuteResponse);
+}

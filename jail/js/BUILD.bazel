@@ -5,7 +5,12 @@ go_library(
     srcs = ["main.go"],
     importpath = "github.com/prufen/prufen/jail/js",
     visibility = ["//visibility:private"],
-    deps = ["@com_rogchap_v8go//:go_default_library"],
+    deps = [
+        "//jail/js/proto",
+        "@com_rogchap_v8go//:go_default_library",
+        "@org_golang_google_grpc//:go_default_library",
+        "@org_golang_google_grpc//reflection",
+    ],
 )
 
 go_binary(

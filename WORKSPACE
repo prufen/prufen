@@ -42,7 +42,7 @@ new_git_repository(
 # )
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 load("//:gazelle_repos.bzl", "gazelle_repositories")
 
 # gazelle:repository_macro gazelle_repos.bzl%gazelle_repositories
@@ -53,3 +53,32 @@ go_rules_dependencies()
 go_register_toolchains(version = "1.19.1")
 
 gazelle_dependencies()
+
+http_archive(
+    name = "com_google_protobuf",
+    sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
+    strip_prefix = "protobuf-3.14.0",
+    urls = [
+        "https://mirror.bazel.build/github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
+        "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz",
+    ],
+)
+
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+
+# If protobuf stuff is put before gazelle stuff, gazelle get's confused with errors like:
+#     ... every rule of type _gazelle_runner implicitly depends upon the target '@bazel_gazelle//internal:gazelle.bash.in',
+#     but this target could not be found because ...
+protobuf_deps()
+
+go_repository(
+    name = "org_golang_google_grpc",
+    # Disable generation from proto file to overcome issues like
+    # https://github.com/bazelbuild/bazel-gazelle/issues/1058
+    # as documented in
+    # https://github.com/bazelbuild/rules_go/blob/5d306c433cebb1ae8a7b72df2a055be2bacbb12b/go/dependencies.rst#grpc-dependencies
+    build_file_proto_mode = "disable",
+    importpath = "google.golang.org/grpc",
+    sum = "h1:WTLtQzmQori5FUH25Pq4WT22oCsv8USpQ+F6rqtsmxw=",
+    version = "v1.49.0",
+)
