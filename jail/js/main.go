@@ -22,13 +22,17 @@ func (s *jsjailService) Execute(ctx context.Context, req *pb.ExecuteRequest) (*p
 	v8ctx := v8.NewContext()
 	defer v8ctx.Close()
 
+	log.Printf("requested script: %q", req.GetScript())
+
 	resp := &pb.ExecuteResponse{}
 	result, err := v8ctx.RunScript(req.GetScript(), "script.js")
 	if result != nil {
 		resp.Result = fmt.Sprintf("%v", result)
+		log.Printf("result: %q", resp.Result)
 	}
 	if err != nil {
 		resp.Error = fmt.Sprintf("%v", err)
+		log.Printf("error: %q", resp.Error)
 	}
 
 	return resp, nil
