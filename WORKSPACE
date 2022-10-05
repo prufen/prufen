@@ -82,3 +82,42 @@ go_repository(
     sum = "h1:WTLtQzmQori5FUH25Pq4WT22oCsv8USpQ+F6rqtsmxw=",
     version = "v1.49.0",
 )
+
+http_archive(
+    name = "io_bazel_rules_docker",
+    sha256 = "b1e80761a8a8243d03ebca8845e9cc1ba6c82ce7c5179ce2b295cd36f7e394bf",
+    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.25.0/rules_docker-v0.25.0.tar.gz"],
+)
+
+load("@io_bazel_rules_docker//repositories:repositories.bzl", container_repositories = "repositories")
+
+container_repositories()
+
+load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
+
+container_deps()
+
+load("@io_bazel_rules_docker//go:image.bzl", _go_image_repos = "repositories")
+
+_go_image_repos()
+
+load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
+
+# Use recent Ubuntu image as a base for JSJail (that uses C++-based V8).
+# v8go builds V8 using Ubuntu 18.04 image:
+# https://github.com/rogchap/v8go/blob/fc8b9f1095704bc00c8b1b065e4834cadf2802c6/.github/workflows/v8build.yml#L17
+# and Bazel builds remaining CGO code using whatever C++ toolchain is configured.
+# Using current Go or C++ distroless images producess errors like:
+#     /app/jail/js/js: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34' not found (required by /app/jail/js/js)
+#     /app/jail/js/js: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.32' not found (required by /app/jail/js/js)
+#     /app/jail/js/js: /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.29' not found (required by /app/jail/js/js)
+#     /app/jail/js/js: /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.30' not found (required by /app/jail/js/js)
+container_pull(
+    name = "jsjail_image_base",
+    # Suggested by Bazel.
+    digest = "sha256:a8fe6fd30333dc60fc5306982a7c51385c2091af1e0ee887166b40a905691fd0",
+    registry = "index.docker.io",
+    repository = "library/ubuntu",
+    # Ubuntu 22.04 updated to a specific day.
+    tag = "jammy-20221003",
+)
