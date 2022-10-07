@@ -11,7 +11,7 @@ import (
 	"google.golang.org/grpc/reflection"
 	v8 "rogchap.com/v8go"
 
-	pb "github.com/prufen/prufen/jail/js/proto"
+	pb "github.com/prufen/prufen/jsjail/proto"
 )
 
 type jsjailService struct {
