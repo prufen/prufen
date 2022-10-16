@@ -125,8 +125,8 @@ container_pull(
 # It's too hard to build nsjail under Bazel, so let's just build it in Docker (supported by upstream) and use it as a base image.
 container_pull(
     name = "cjail_image_base",
-    digest = "sha256:1a94b708239adb4f663d32d61ad3909b22145508d5a34956b84dcccdd1e329d6",
+    digest = "sha256:4c17e599229bc1782239b2e7db1013bf42fb7b8080d7fe0a5cb6ca06ab23f4eb",
     registry = "index.docker.io",
     repository = "rutsky/jail-base",
-    tag = "5",
+    tag = "6",
 )
