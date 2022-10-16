@@ -121,3 +121,12 @@ container_pull(
     # Ubuntu 22.04 updated to a specific day.
     tag = "jammy-20221003",
 )
+
+# It's too hard to build nsjail under Bazel, so let's just build it in Docker (supported by upstream) and use it as a base image.
+container_pull(
+    name = "nsjail_image_base",
+    digest = "sha256:1a94b708239adb4f663d32d61ad3909b22145508d5a34956b84dcccdd1e329d6",
+    registry = "index.docker.io",
+    repository = "rutsky/jail-base",
+    tag = "5",
+)
