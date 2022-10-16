@@ -5,6 +5,11 @@ go_library(
     srcs = ["main.go"],
     importpath = "github.com/prufen/prufen/cjail",
     visibility = ["//visibility:private"],
+    deps = [
+        "//cjail/proto",
+        "@org_golang_google_grpc//:go_default_library",
+        "@org_golang_google_grpc//reflection",
+    ],
 )
 
 go_binary(
