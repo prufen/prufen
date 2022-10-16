@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package cjail;
+
+message ListImagesRequest {
+}
+
+message ListImagesResponse {
+    repeated string image_ref = 1;
+}
+
+service CJail {
+    // ListImages returns the list of the registered base images that can be used to run commands.
+    rpc ListImages(ListImagesRequest) returns (ListImagesResponse);
+}
