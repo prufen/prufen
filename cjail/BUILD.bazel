@@ -1,14 +1,14 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_library(
-    name = "nsjail_lib",
+    name = "cjail_lib",
     srcs = ["main.go"],
-    importpath = "github.com/prufen/prufen/nsjail",
+    importpath = "github.com/prufen/prufen/cjail",
     visibility = ["//visibility:private"],
 )
 
 go_binary(
-    name = "nsjail",
-    embed = [":nsjail_lib"],
+    name = "cjail",
+    embed = [":cjail_lib"],
     visibility = ["//visibility:public"],
 )
