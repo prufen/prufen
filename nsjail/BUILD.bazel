@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "nsjail_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/prufen/prufen/nsjail",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "nsjail",
+    embed = [":nsjail_lib"],
+    visibility = ["//visibility:public"],
+)
