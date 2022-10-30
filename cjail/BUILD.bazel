@@ -1,5 +1,6 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@io_bazel_rules_docker//go:image.bzl", "go_image")
+load("@io_bazel_rules_docker//container:container.bzl", "container_push")
 
 go_library(
     name = "cjail_lib",
@@ -27,4 +28,14 @@ go_image(
     name = "image",
     base = "@cjail_image_base//image",
     binary = ":cjail",
+)
+
+container_push(
+    name = "push_image",
+    format = "Docker",
+    image = ":image",
+    # TODO: Make customizable.
+    # Pushes europe-west1-docker.pkg.dev/prufen-dev/docker-repo/cjail:latest
+    registry = "europe-west1-docker.pkg.dev",
+    repository = "prufen-dev/docker-repo/cjail",
 )
