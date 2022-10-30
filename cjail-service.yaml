@@ -1,0 +1,21 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: cjail
+
+spec:
+  template:
+    spec:
+      containers:
+      # TODO: Make customizable.
+      - image: europe-west1-docker.pkg.dev/prufen-dev/docker-repo/cjail
+        args:
+        - --listen-address=0.0.0.0:8080
+        - >-
+            --images-ref-to-dir-json-map={
+              "docker.io/library/busybox@sha256:9810966b5f712084ea05bf28fc8ba2c8fb110baa2531a10e2da52c1efc504698": "/images/busybox/",
+              "docker.io/rutsky/cpp-test@sha256:0a0fde45421054d4dc05aae18c6bee5a7073135b0a1d93f09c89e477019e49b7": "/images/rutsky-cpp-test-17/"
+            }
+        ports:
+        - name: h2c
+          containerPort: 8080
