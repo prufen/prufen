@@ -37,7 +37,7 @@ Service URL: https://cjail-redacted.a.run.app
 To update service definition:
 
 ```
-$ gcloud run services replace cjail-service.yaml
+$ gcloud run services replace cjail/cjail-service.yaml
 ```
 
 ### `jsjail`
