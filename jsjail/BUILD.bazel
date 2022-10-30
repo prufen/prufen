@@ -1,5 +1,6 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@io_bazel_rules_docker//go:image.bzl", "go_image")
+load("@io_bazel_rules_docker//container:container.bzl", "container_push")
 
 go_binary(
     name = "jsjail",
@@ -24,4 +25,14 @@ go_library(
         "@org_golang_google_grpc//:go_default_library",
         "@org_golang_google_grpc//reflection",
     ],
+)
+
+container_push(
+   name = "push_image",
+   image = ":image",
+   format = "Docker",
+   # TODO: Make customizable.
+   # Pushes europe-west1-docker.pkg.dev/prufen-dev/docker-repo/jsjail:latest
+   registry = "europe-west1-docker.pkg.dev",
+   repository = "prufen-dev/docker-repo/jsjail",
 )

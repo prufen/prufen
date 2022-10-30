@@ -1,0 +1,14 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: jsjail
+
+spec:
+  template:
+    spec:
+      containers:
+      # TODO: Make customizable.
+      - image: europe-west1-docker.pkg.dev/prufen-dev/docker-repo/jsjail
+        ports:
+        - name: h2c
+          containerPort: 8080

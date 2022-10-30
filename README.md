@@ -39,3 +39,11 @@ To update service definition:
 ```
 $ gcloud run services replace cjail-service.yaml
 ```
+
+### `jsjail`
+
+```
+$ bazel run //jsjail:push_image
+$ gcloud run services update jsjail --image=europe-west1-docker.pkg.dev/prufen-dev/docker-repo/jsjail
+$ gcloud run services replace jsjail/jsjail-service.yaml
+```
