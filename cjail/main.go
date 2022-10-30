@@ -6,6 +6,7 @@ import (
 	"log"
 	"net"
 	"os"
+	"os/exec"
 	"path"
 	"sort"
 
@@ -20,6 +21,7 @@ type cjailService struct {
 	pb.UnimplementedCJailServer
 
 	imagesRefToDir map[string]string
+	nsjailPath     string
 }
 
 func (s *cjailService) ListImages(ctx context.Context, req *pb.ListImagesRequest) (*pb.ListImagesResponse, error) {
@@ -40,6 +42,7 @@ func (s *cjailService) ListImages(ctx context.Context, req *pb.ListImagesRequest
 type options struct {
 	ListenAddress         string `long:"listen-address"             env:"CJAIL_LISTEN_ADDRESS"             default:"localhost:8080" description:"gRPC listen address"`
 	ImagesRefToDirJsonMap string `long:"images-ref-to-dir-json-map" env:"CJAIL_IMAGES_REF_TO_DIR_JSON_MAP" default:"{}"             description:"JSON map from image refs to directories with image files"`
+	NsjailExec            string `long:"nsjail-exec"                env:"CJAIL_NSJAIL_EXEC"                default:"nsjail"         description:"path to nsjail executable"`
 }
 
 func main() {
@@ -62,8 +65,14 @@ func main() {
 		log.Fatalf("failed to parse images refs to directories JSON map: %v\nJSON map:\n%v", err, opts.ImagesRefToDirJsonMap)
 	}
 
+	nsjailPath, err := exec.LookPath(opts.NsjailExec)
+	if err != nil {
+		log.Fatalf("nsjail executable not found %q: %v", opts.NsjailExec, err)
+	}
+
 	service := &cjailService{
 		imagesRefToDir: imagesRefToDir,
+		nsjailPath:     nsjailPath,
 	}
 
 	log.Printf("listening on %q", opts.ListenAddress)
