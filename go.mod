@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/jessevdk/go-flags v1.5.0
+	golang.org/x/sync v0.0.0-20190423024810-112230192c58
 	google.golang.org/grpc v1.49.0
 	rogchap.com/v8go v0.7.0
 )
