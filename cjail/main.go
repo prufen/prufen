@@ -66,6 +66,7 @@ func main() {
 		imagesRefToDir: imagesRefToDir,
 	}
 
+	log.Printf("listening on %q", opts.ListenAddress)
 	listener, err := net.Listen("tcp", opts.ListenAddress)
 	if err != nil {
 		log.Fatalf("net.Listen: %v", err)
