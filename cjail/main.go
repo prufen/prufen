@@ -59,7 +59,7 @@ func main() {
 
 	imagesRefToDir := map[string]string{}
 	if err := json.Unmarshal([]byte(opts.ImagesRefToDirJsonMap), &imagesRefToDir); err != nil {
-		log.Fatalf("Failed to parse images refs to directories JSON map: %v\nJSON map:\n%v", err, opts.ImagesRefToDirJsonMap)
+		log.Fatalf("failed to parse images refs to directories JSON map: %v\nJSON map:\n%v", err, opts.ImagesRefToDirJsonMap)
 	}
 
 	service := &cjailService{
