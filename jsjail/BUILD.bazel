@@ -28,11 +28,11 @@ go_library(
 )
 
 container_push(
-   name = "push_image",
-   image = ":image",
-   format = "Docker",
-   # TODO: Make customizable.
-   # Pushes europe-west1-docker.pkg.dev/prufen-dev/docker-repo/jsjail:latest
-   registry = "europe-west1-docker.pkg.dev",
-   repository = "prufen-dev/docker-repo/jsjail",
+    name = "push_image",
+    format = "Docker",
+    image = ":image",
+    # TODO: Make customizable.
+    # Pushes europe-west1-docker.pkg.dev/prufen-dev/docker-repo/jsjail:latest
+    registry = "europe-west1-docker.pkg.dev",
+    repository = "prufen-dev/docker-repo/jsjail",
 )
