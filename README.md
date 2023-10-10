@@ -47,6 +47,13 @@ $ bazel run //cjail:cjail -- --images-ref-to-dir-json-map "{\"busybox\": \"$PWD/
 ```
 
 ```
+$ grpc_cli call localhost:8080 cjail.CJail/ListImages ''
+connecting to localhost:8080
+image_ref: "busybox"
+Rpc succeeded with OK status
+```
+
+```
 $ grpc_cli call localhost:8080 cjail.CJail/Execute 'base_image_ref: "busybox" file: "/bin/sh" args: ["-c", "id"]'
 connecting to localhost:8080
 stdout: "uid=1000 gid=1000 groups=65534(nobody),65534(nobody),65534(nobody),65534(nobody),65534(nobody),65534(nobody),1000,65534(nobody)\n"
