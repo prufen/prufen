@@ -2,6 +2,57 @@
 
 CI-like system for running checks for user-submitted code.
 
+## Development
+
+### `cjail`
+
+You need a container filesystem to run commands inside.
+
+You can download a Docker image for this, e.g. using `skopeo` and `oci-image-tool`:
+
+```
+# on Ubuntu 22.04
+$ sudo apt install skopeo oci-image-tool
+$ skopeo --insecure-policy copy "docker://docker.io/library/busybox" oci:.images:busybox
+$ oci-image-tool unpack --ref name=busybox .images-repo .images/busybox/
+$ tree -L 2 .images .images-repo/
+.images
+└── busybox
+    ├── bin
+    ├── dev
+    ├── etc
+    ├── home
+    ├── lib
+    ├── lib64 -> lib
+    ├── root
+    ├── tmp
+    ├── usr
+    └── var
+.images-repo/
+├── blobs
+│   └── sha256
+├── index.json
+└── oci-layout
+
+2 directories, 2 files
+```
+
+You need to have [`nsjail`](https://github.com/google/nsjail) binary in `$PATH`.
+
+```
+$ bazel run //cjail:cjail -- --images-ref-to-dir-json-map "{\"busybox\": \"$PWD/.images/busybox/\"}"
+...
+2023/10/10 20:42:35 starting CJail server...
+2023/10/10 20:42:35 listening on "localhost:8080"
+```
+
+```
+$ grpc_cli call localhost:8080 cjail.CJail/Execute 'base_image_ref: "busybox" file: "/bin/sh" args: ["-c", "id"]'
+connecting to localhost:8080
+stdout: "uid=1000 gid=1000 groups=65534(nobody),65534(nobody),65534(nobody),65534(nobody),65534(nobody),65534(nobody),1000,65534(nobody)\n"
+...
+```
+
 ## Deployment to `prufen-dev`
 
 ### `cjail`

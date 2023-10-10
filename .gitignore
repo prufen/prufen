@@ -1,1 +1,3 @@
 /bazel-*
+/.images-repo/
+/.images/
