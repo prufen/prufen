@@ -1,0 +1,5 @@
+# Update default C++ standard to C++17 as required by e.g. recent ABSL
+# releases (used in Protobuf)
+# Probably better than overriding flags would be to explicitly specify custom
+# toolchain with a more recent compiler that uses C++17 by default.
+build --cxxopt=-std=c++17 --host_cxxopt=-std=c++17
