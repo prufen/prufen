@@ -79,8 +79,8 @@ go_repository(
     # https://github.com/bazelbuild/rules_go/blob/5d306c433cebb1ae8a7b72df2a055be2bacbb12b/go/dependencies.rst#grpc-dependencies
     build_file_proto_mode = "disable",
     importpath = "google.golang.org/grpc",
-    sum = "h1:WTLtQzmQori5FUH25Pq4WT22oCsv8USpQ+F6rqtsmxw=",
-    version = "v1.49.0",
+    sum = "h1:BjnpXut1btbtgN/6sp+brB2Kbm2LjNXnidYujAVbSoQ=",
+    version = "v1.58.3",
 )
 
 http_archive(
