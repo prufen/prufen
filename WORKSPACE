@@ -26,11 +26,12 @@ new_git_repository(
     name = "com_rogchap_v8go",
     # This is external/v8go.BUILD file.
     build_file = "v8go.BUILD",
-    # v0.7.0
-    commit = "6e4af34cf4447be859741c0719aee06a3d3e7b2a",
+    # v0.9.0
+    # Note: keep in sync with the version imported in go.mod
+    commit = "0e40e6e5827ad897d25f915917d8206e9a8231db",
     remote = "https://github.com/rogchap/v8go",
     # Suggested by Bazel.
-    shallow_since = "1639006196 +1100",
+    shallow_since = "1679354875 -0400",
 )
 
 # An example of using local (and patched) version of the repository:

@@ -39,9 +39,9 @@ go_library(
         ":v8",
     ],
     cxxopts = [
-        # Flags set in cgo.go (plus fix to use "-fPIC"):
-        # https://github.com/rogchap/v8go/blob/6e4af34cf4447be859741c0719aee06a3d3e7b2a/cgo.go#L9
-        "-fno-rtti", "-fPIC", "-std=c++14", "-DV8_COMPRESS_POINTERS", "-DV8_31BIT_SMIS_ON_64BIT_ARCH",
+        # Flags set in cgo.go (without `-I${SRCDIR}/deps/include`):
+        # https://github.com/rogchap/v8go/blob/0e40e6e5827ad897d25f915917d8206e9a8231db/cgo.go#L9
+        "-fno-rtti", "-fPIC", "-std=c++17", "-DV8_COMPRESS_POINTERS", "-DV8_31BIT_SMIS_ON_64BIT_ARCH", "-Wall", "-DV8_ENABLE_SANDBOX",
     ],
 )
 

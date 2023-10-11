@@ -6,6 +6,7 @@ require (
 	github.com/jessevdk/go-flags v1.5.0
 	golang.org/x/sync v0.4.0
 	google.golang.org/grpc v1.58.3
+	// Note: keep version in sync with com_rogchap_v8go Bazel target
 	rogchap.com/v8go v0.9.0
 )
 
