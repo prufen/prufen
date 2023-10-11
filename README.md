@@ -60,6 +60,23 @@ stdout: "uid=1000 gid=1000 groups=65534(nobody),65534(nobody),65534(nobody),6553
 ...
 ```
 
+### `jsjail`
+
+Run locally:
+
+```
+$ bazel run //jsjail:jsjail
+```
+
+Call local instance:
+
+```
+$ grpc_cli call localhost:8080 JSJail.Execute 'script: "2 ** 10"'
+connecting to localhost:8080
+result: "1024"
+Rpc succeeded with OK status
+```
+
 ## Deployment to `prufen-dev`
 
 ### `cjail`
