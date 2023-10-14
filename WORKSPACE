@@ -13,10 +13,10 @@ http_archive(
 
 http_archive(
     name = "bazel_gazelle",
-    sha256 = "448e37e0dbf61d6fa8f00aaa12d191745e14f07c31cabfa731f0c8e8a4f41b97",
+    sha256 = "ecba0f04f96b4960a5b250c8e8eeec42281035970aa8852dda73098274d14a1d",
     urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.28.0/bazel-gazelle-v0.28.0.tar.gz",
-        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.27.0/bazel-gazelle-v0.28.0.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.29.0/bazel-gazelle-v0.29.0.tar.gz",
+        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.29.0/bazel-gazelle-v0.29.0.tar.gz",
     ],
 )
 
@@ -53,6 +53,21 @@ go_rules_dependencies()
 
 go_register_toolchains(version = "1.20.5")
 
+# Must be defined before gazelle_dependencies(), as otherwise one of the
+# dependencies there will define this repository with incorrect flags and
+# version.
+go_repository(
+    name = "org_golang_google_grpc",
+    # Disable generation from proto file to overcome issues like
+    # https://github.com/bazelbuild/bazel-gazelle/issues/1058
+    # as documented in
+    # https://github.com/bazelbuild/rules_go/blob/5d306c433cebb1ae8a7b72df2a055be2bacbb12b/go/dependencies.rst#grpc-dependencies
+    build_file_proto_mode = "disable",
+    importpath = "google.golang.org/grpc",
+    sum = "h1:BjnpXut1btbtgN/6sp+brB2Kbm2LjNXnidYujAVbSoQ=",
+    version = "v1.58.3",
+)
+
 gazelle_dependencies()
 
 http_archive(
@@ -71,18 +86,6 @@ load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 #     ... every rule of type _gazelle_runner implicitly depends upon the target '@bazel_gazelle//internal:gazelle.bash.in',
 #     but this target could not be found because ...
 protobuf_deps()
-
-go_repository(
-    name = "org_golang_google_grpc",
-    # Disable generation from proto file to overcome issues like
-    # https://github.com/bazelbuild/bazel-gazelle/issues/1058
-    # as documented in
-    # https://github.com/bazelbuild/rules_go/blob/5d306c433cebb1ae8a7b72df2a055be2bacbb12b/go/dependencies.rst#grpc-dependencies
-    build_file_proto_mode = "disable",
-    importpath = "google.golang.org/grpc",
-    sum = "h1:BjnpXut1btbtgN/6sp+brB2Kbm2LjNXnidYujAVbSoQ=",
-    version = "v1.58.3",
-)
 
 http_archive(
     name = "io_bazel_rules_docker",
